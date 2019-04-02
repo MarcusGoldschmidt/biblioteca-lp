@@ -1,0 +1,79 @@
+from controllers.fileMethods import *
+
+DB_CLIENTE = "Usuarios.csv"
+
+
+def index():
+    return lerarquivo(DB_CLIENTE)
+
+
+def store():
+    user = []
+
+    user.append(input("CPF =>"))
+    user.append(input("NOME =>"))
+    while True:
+        user.append(input("TIPO =>"))
+        if user[2] in ['0', '1']:
+            user[2] = "Professor" if user[2] == 0 else "Estudante"
+            break
+        else:
+            print("Valor não permitido!")
+        break
+    user.append(0)
+    user.append("null")
+
+    print(user)
+
+    if escrevefilefinal(user, DB_CLIENTE):
+        print("Salvo com sucesso!")
+    else:
+        print("Erro ao salvar!")
+
+
+def update():
+    data = index()
+
+    exibirclientes()
+
+    id = input("Alterar por CPF: ")
+
+    for user in data:
+        if user[0] == id:
+            user[0] = input("CPF =>")
+            user[1] = input("NOME =>")
+            while True:
+                user[2] = input("TIPO =>")
+                if user[2] in ['0', '1']:
+                    user[2] = "Professor" if user[2] == 0 else "Estudante"
+                    break
+                else:
+                    print("Valor não permitido!")
+            break
+
+    escrevefile(data, DB_CLIENTE)
+
+
+def delete(id):
+    data = index()
+    newData = []
+
+    exibirclientes()
+
+    id = input("Deletar por CPF: ")
+
+    for user in data:
+        if user[0] != id:
+            newData.append(user)
+    escrevefile(newData, DB_CLIENTE, 2)
+
+
+def exibirclientes():
+    data = index()
+
+    for i in data:
+        for j in i:
+            if j == i[-1]:
+                print(j)
+                break
+            print(j + "   |   ", end='')
