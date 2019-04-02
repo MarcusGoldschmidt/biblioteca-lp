@@ -23,8 +23,6 @@ def store():
     user.append(0)
     user.append("null")
 
-    print(user)
-
     if escrevefilefinal(user, DB_CLIENTE):
         print("Salvo com sucesso!")
     else:
