@@ -78,17 +78,15 @@ def listalivrosemprestadosusuario():
     exibirclientes()
     cpf = str(input("CPF => "))
 
-    data = [int(x) for x in input("Data inicial **/**/****").split("/")]
-    dataInicio = datetime.datetime(data[2], data[1], data[0]).strftime("%d/%m/%Y")
+    dataInicio = [int(x) for x in input("Data inicial **/**/****").split("/")]
 
-    data = [int(x) for x in input("Data Final **/**/****").split("/")]
-    dataFinal = datetime.datetime(data[2], data[1], data[0]).strftime("%d/%m/%Y")
+    dataFinal = [int(x) for x in input("Data Final **/**/****").split("/")]
 
     emprestimos = index()
     livros = indexLivro()
 
     for emprestimo in emprestimos:
-        if emprestimo[2] == cpf and (dataInicio < emprestimo[4]) and (emprestimo[6] < dataFinal):
+        if emprestimo[2] == cpf and comparardata(dataInicio, emprestimo[4]) and comparardata(emprestimo[6], dataFinal):
             for livro in livros:
                 if emprestimo[1] == livro[0]:
                     exibirlivro(livro)
@@ -156,3 +154,16 @@ def exibiremprestimos():
                 print(j)
                 break
             print(j + "   |   ", end='')
+
+
+# Verifica se a data é maior
+# Recebendo **/**/**** strings
+def comparardata(datamenor, datamaior):
+    if datamaior[2] > datamenor[2]:
+        return True
+    elif datamaior[1] > datamenor[1]:
+        return True
+    elif datamaior[0] > datamenor[0]:
+        return True
+    else:
+        return False
