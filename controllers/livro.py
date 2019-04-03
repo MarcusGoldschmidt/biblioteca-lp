@@ -46,7 +46,8 @@ def update():
             livro[8] = input("Palabra-chave 3 =>")
     escrevefile(data, DB_LIVRO)
 
-def updateone(newData):
+
+def updateonelivro(newData):
     update = []
 
     for aux in index():
@@ -54,6 +55,14 @@ def updateone(newData):
             aux = newData
         update.append(aux)
     escrevefile(update, DB_LIVRO)
+
+
+def showLivro(id):
+    for data in index():
+        if data[0] == id:
+            return data
+    return 0
+
 
 def exibirlivros():
     data = index()

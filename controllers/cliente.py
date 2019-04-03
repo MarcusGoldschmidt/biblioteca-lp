@@ -51,7 +51,7 @@ def update():
     escrevefile(data, DB_CLIENTE)
 
 
-def updateone(newData):
+def updateonecliente(newData):
     update = []
 
     for aux in index():
@@ -59,6 +59,13 @@ def updateone(newData):
             aux = newData
         update.append(aux)
     escrevefile(update, DB_CLIENTE)
+
+
+def showCliente(id):
+    for data in index():
+        if data[0] == id:
+            return data
+    return 0
 
 
 def delete(id):

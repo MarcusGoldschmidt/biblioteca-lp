@@ -1,6 +1,6 @@
-from controllers.cliente import exibirclientes
+from controllers.cliente import exibirclientes, showCliente, updateonecliente
 from controllers.fileMethods import *
-from controllers.livro import exibirlivros
+from controllers.livro import exibirlivros, showLivro, updateonelivro
 import datetime
 
 DB_EMPRESTIMOS = "Emprestimos.csv"
@@ -15,31 +15,63 @@ def store():
 
     exibirclientes()
     cpf = str(input("CPF => "))
+    cliente = showCliente(cpf)
+
+    if cliente[3] == 3:
+        print("Maximo de livros emprestados")
+        return 0
 
     exibirlivros()
-    livro = str(input("ID Livro"))
+    idlivro = str(input("ID Livro"))
+    livro = showLivro(idlivro)
 
     emprestimo.append(numeroregistros(DB_EMPRESTIMOS) + 1)
-    emprestimo.append(livro)
+    emprestimo.append(idlivro)
     emprestimo.append(cpf)
+    # Inicio da reserva
     emprestimo.append(str(datetime.datetime.now().strftime("%d/%m/%Y")))
 
     # Maximo da entrega
-    data = input("Data **/**/**** => ").split('/')
-    map(lambda x: int(x), data)
-    emprestimo.append(datetime.datetime(data[2], data[1], data[0]).strftime("%d/%m/%Y"))
+    data = str(datetime.datetime.now().strftime("%d/%m/%Y"))
+    data = calculoentrega([int(x) for x in data], cliente[2])
+    emprestimo.append(data)
+
+    print("Entraga em " + data)
 
     # Data da devolução
-    data = input("Data **/**/**** => ").split('/')
-    map(lambda x: int(x), data)
-    emprestimo.append(datetime.datetime(data[2], data[1], data[0]).strftime("%d/%m/%Y"))
+    emprestimo.append("NULL")
 
+    # Quantidade de renovações
     emprestimo.append(0)
+
+    # Atualizar Livro
+    livro[9] = 1
+    updateonelivro(livro)
+
+    # Atualizar Cliente
+    cliente[3] += 1
+    updateonecliente(cliente)
 
     if escrevefilefinal(emprestimo, DB_EMPRESTIMOS):
         print("Salvo com sucesso!")
     else:
         print("Erro ao salvar!")
+
+
+def calculoentrega(datainicio, tipo):
+    if tipo == "Estudante":
+        datainicio[2] += 7
+    else:
+        datainicio[2] += 15
+
+    if datainicio[2] > 30:
+        datainicio[2] -= 30
+        datainicio[1] += 1
+        if datainicio[1] > 12:
+            datainicio[1] -= 12
+            datainicio[0] += 1
+
+    return datetime.datetime(datainicio[2], datainicio[1], datainicio[0]).strftime("%d/%m/%Y")
 
 
 def update():
@@ -89,9 +121,9 @@ def delete(id):
 
 
 def show(id):
-    for livro in index():
-        if livro[0] == id:
-            return livro
+    for data in index():
+        if data[0] == id:
+            return data
     return 0
 
 
