@@ -1,6 +1,6 @@
 from controllers.cliente import exibirclientes, showCliente, updateonecliente
 from controllers.fileMethods import *
-from controllers.livro import exibirlivros, showLivro, updateonelivro
+from controllers.livro import exibirlivros, showLivro, updateonelivro, index as indexLivro, exibirlivro
 import datetime
 
 DB_EMPRESTIMOS = "Emprestimos.csv"
@@ -72,6 +72,26 @@ def calculoentrega(datainicio, tipo):
             datainicio[0] += 1
 
     return datetime.datetime(datainicio[2], datainicio[1], datainicio[0]).strftime("%d/%m/%Y")
+
+
+def listalivrosemprestadosusuario():
+    exibirclientes()
+    cpf = str(input("CPF => "))
+
+    data = [int(x) for x in input("Data inicial **/**/****").split("/")]
+    dataInicio = datetime.datetime(data[2], data[1], data[0]).strftime("%d/%m/%Y")
+
+    data = [int(x) for x in input("Data Final **/**/****").split("/")]
+    dataFinal = datetime.datetime(data[2], data[1], data[0]).strftime("%d/%m/%Y")
+
+    emprestimos = index()
+    livros = indexLivro()
+
+    for emprestimo in emprestimos:
+        if emprestimo[2] == cpf and (dataInicio < emprestimo[4]) and (emprestimo[6] < dataFinal):
+            for livro in livros:
+                if emprestimo[1] == livro[0]:
+                    exibirlivro(livro)
 
 
 def update():

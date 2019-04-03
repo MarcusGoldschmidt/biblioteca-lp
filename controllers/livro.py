@@ -73,3 +73,9 @@ def exibirlivros():
                 print(j)
                 break
             print(j + "   |   ", end='')
+
+
+def exibirlivro(data):
+    for i in data:
+        print(i + "   |   ", end='')
+    print()
