@@ -48,8 +48,17 @@ def update():
                 else:
                     print("Valor não permitido!")
             break
-
     escrevefile(data, DB_CLIENTE)
+
+
+def updateone(newData):
+    update = []
+
+    for aux in index():
+        if aux[0] == newData[0]:
+            aux = newData
+        update.append(aux)
+    escrevefile(update, DB_CLIENTE)
 
 
 def delete(id):
@@ -63,7 +72,7 @@ def delete(id):
     for user in data:
         if user[0] != id:
             newData.append(user)
-    escrevefile(newData, DB_CLIENTE, 2)
+    escrevefile(newData, DB_CLIENTE)
 
 
 def exibirclientes():

@@ -7,12 +7,53 @@ def index():
     return lerarquivo(DB_LIVRO)
 
 
-def store(data):
-    if escrevefile(data, DB_LIVRO, 2):
+def store():
+    data = []
+
+    data.append(numeroregistros(DB_LIVRO) + 1)
+    data.append(input("Título"))
+    data.append(input("Autor"))
+    data.append(input("Área"))
+    data.append(input("Páginas"))
+    data.append(input("Ano"))
+    data.append(input("Palabra-chave 1"))
+    data.append(input("Palabra-chave 2"))
+    data.append(input("Palabra-chave 3"))
+    data.append(0)
+
+    if escrevefilefinal(data, DB_LIVRO):
         print("Salvo com sucesso!")
     else:
         print("Erro ao salvar!")
 
+
+def update():
+    data = index()
+
+    exibirlivros()
+
+    id = input("Alterar por ID: ")
+
+    for livro in data:
+        if livro[0] == id:
+            livro[1] = input("CPF =>")
+            livro[2] = input("Autor =>")
+            livro[3] = input("Área =>")
+            livro[4] = input("Autor =>")
+            livro[5] = input("Páginas =>")
+            livro[6] = input("Palabra-chave 1 =>")
+            livro[7] = input("Palabra-chave 2 =>")
+            livro[8] = input("Palabra-chave 3 =>")
+    escrevefile(data, DB_LIVRO)
+
+def updateone(newData):
+    update = []
+
+    for aux in index():
+        if aux[0] == newData[0]:
+            aux = newData
+        update.append(aux)
+    escrevefile(update, DB_LIVRO)
 
 def exibirlivros():
     data = index()

@@ -58,3 +58,7 @@ def lerarquivo(arquivo):
     if file == 0:
         return 0
     return [x.split(',') for x in file]
+
+
+def numeroregistros(arquivo):
+    return len([x for x in abrirarquivo(arquivo, 1)])

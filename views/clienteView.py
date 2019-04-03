@@ -1,5 +1,4 @@
 from controllers.cliente import *
-import os
 
 
 def viewCliente():
