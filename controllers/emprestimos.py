@@ -156,6 +156,42 @@ def exibiremprestimos():
             print(j + "   |   ", end='')
 
 
+def renovaremprestimo():
+    newData = []
+
+    emprestimos = index()
+
+    exibirclientes()
+    cpf = input("CLiente por CPF: ")
+    cliente = showCliente(cpf)
+
+    for emprestimo in emprestimos:
+        if emprestimo[2] == cpf:
+            if poderenovar(emprestimo[3], calculoentrega(emprestimo[4], cliente[0]), cliente[2]):
+                emprestimo[4] = calculoentrega(emprestimo[4], cliente[0])
+        newData.append(emprestimo)
+    escrevefile(newData, DB_EMPRESTIMOS)
+
+
+def poderenovar(datainicial, datafuruta, tipo):
+    dias = 0
+
+    dias = datainicial[0] + datafuruta[0]
+    dias = (datainicial[1] + datafuruta[1]) * 30
+    # Não vai ter diferença de um ano de dias
+
+    if tipo == "Estudante":
+        if dias < 21:
+            return True
+        else:
+            return False
+    else:
+        if dias < 45:
+            return True
+        else:
+            return False
+
+
 # Verifica se a data é maior
 # Recebendo **/**/**** strings
 def comparardata(datamenor, datamaior):
