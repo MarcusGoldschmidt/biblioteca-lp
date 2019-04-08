@@ -91,3 +91,13 @@ def exibirclientes():
                 print(j)
                 break
             print(j + "   |   ", end='')
+
+def buscaCliente()
+    aux = input("CPF: ")
+    cliente = index()
+    for i in cliente:
+        if cliente[i][0] == aux:
+            print(cliente[i][j] for j in i)
+            return True
+
+    return False
