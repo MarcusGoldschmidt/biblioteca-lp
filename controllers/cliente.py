@@ -1,6 +1,6 @@
 from controllers.fileMethods import *
 
-DB_CLIENTE = "Usuarios.csv"
+DB_CLIENTE = "UsuariosCab.csv"
 
 
 def index():
@@ -92,7 +92,7 @@ def exibirclientes():
                 break
             print(j + "   |   ", end='')
 
-def buscaCliente()
+def buscaCliente():
     aux = input("CPF: ")
     cliente = index()
     for i in cliente:
@@ -101,3 +101,5 @@ def buscaCliente()
             return True
 
     return False
+
+

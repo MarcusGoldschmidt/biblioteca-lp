@@ -209,74 +209,74 @@ def comparardata(datamenor, datamaior):
     else:
         return False
 
+def verificaLivro(emprestimo):
+    livros = indexLivro()
+    flag = 0
+    for livro in livros:
+        if livro[0] == emprestimo[1]:  # Se os ID's forem Iguais.
+            livro[9] = False  # Remove flag de empréstimo.
+            outputLIV = csv.writer(DB_LIVROS, delimiter = ';')
+            outputLIV.writerow(n for n in livro)
+
+            flag = 1
+        else:
+            outputLIV = csv.writer(DB_LIVROS, delimiter=';')
+            outputLIV.writerow(n for n in livro)
+    if flag == 0:
+        return 0
+    else:
+        return 1
+
 def devolveEmprestimo():
 
     id = input("ID do Empréstimo: ")
-    emprestimo = index()
+    emprestimos = index()
 
-    for i in emprestimo:
-        if emprestimo[i][0] == id: #Acha o empréstimo no index.
+    for emprestimo in emprestimos:
+        if emprestimo[0] == id: #Acha o empréstimo no index.
 
             now = datetime.date.today()
             now = now.strftime("%d/%m/%Y")
 
-            emprestimo[i][5] = now #Atualiza data de devolução.
+            emprestimo[5] = now #Atualiza data de devolução.
 
-            if emprestimo[i][4] >= now: #Não aplica punição.
-                usuario = indexUsuarios()
-                for p in usuario:
-                    if usuario[p][0] == emprestimo[i][2]: #Se o CPF for igual.
-                        usuario[p][3] = usuario[p][3] - 1 #Diminui 1 da Quantidade emprestada.
+            if emprestimo[4] >= now: #Não aplica punição.
+                usuarios = indexUsuarios()
+                for usuario in usuarios:
+                    if usuario[0] == emprestimo[2]: #Se o CPF for igual.
+                        usuario[3] = usuario[3] - 1 #Diminui 1 da Quantidade emprestada.
                         outputUSR = csv.writer(DB_CLIENTES, delimiter=';')
-                        outputUSR.writerow(usuario[p][k] for k in p)
+                        outputUSR.writerow(k for k in usuario)
+                        verificaLivro(emprestimo)
 
-                        livro = indexLivro()
-                        for n in livro:
-                            if livro[n][0] == emprestimo[i][1]: #Se os ID's forem Iguais.
-                                livro[n][9] = False #Remove flag de empréstimo.
-
-                                outputLIV = csv.writer(DB_LIVROS, delimiter=';')
-                                outputLIV.writerow(livro[n][m] for m in n)
-
-                                return True
-                            else:
-                                outputLIV = csv.writer(DB_LIVROS, delimiter=';')
-                                outputLIV.writerow(livro[n][m] for m in n)
                     else:
                         outputUSR = csv.writer(DB_CLIENTES, delimiter=';')
-                        outputUSR.writerow(usuario[p][k] for k in p)
+                        outputUSR.writerow(k for k in usuarios)
             else: #Aplica punição.
-                usuario = indexUsuarios()
-                for p in usuario:
-                    if usuario[p][0] == emprestimo[i][2]: #Se o CPF for igual.
-                        usuario[p][3] = usuario[p][3] - 1 #Diminui 1 da Quantidade emprestada.
+                usuarios = indexUsuarios()
+                for usuario in usuarios:
+                    if usuario[0] == emprestimo[2]: #Se o CPF for igual.
+                        usuario[3] = usuario[3] - 1 #Diminui 1 da Quantidade emprestada.
 
-                        datamax = datetime.datetime.strptime(emprestimo[i][4], "%d/%m/%Y")
+                        datamax = datetime.datetime.strptime(emprestimo[4], "%d/%m/%Y")
 
                         now = now.toordinal() #Converte para numero de dias.
                         pune_dias =  (now - datamax)*2 #Calcula a punição.
 
-                        usuario[p][4] = now + pune_dias #Seta a data de prox empréstimo em inteiro
-                        usuario[p][4] = datetime.date.fromordinal(usuario[p][4]) #Converte pro formato da data.
-                        usuario[p][4] = usuario[p][4].strftime("%d/%m/%Y") #Converte pro formato Brasileiro.
+                        usuario[4] = now + pune_dias #Seta a data de prox empréstimo em inteiro
+                        usuario[4] = datetime.date.fromordinal(usuario[4]) #Converte pro formato da data.
+                        usuario[4] = usuario[4].strftime("%d/%m/%Y") #Converte pro formato Brasileiro.
 
                         outputUSR = csv.writer(DB_CLIENTES, delimiter=';')
-                        outputUSR.writerow(usuario[p][k] for k in p),
+                        outputUSR.writerow(k for k in usuarios)
 
-                        livro = indexLivro()
-                        for n in livro:
-                            if livro[n][0] == emprestimo[i][1]: #Se os ID's forem Iguais.
-                                livro[n][9] = False #Remove flag de empréstimo.
+                        verificaLivro(emprestimo)
 
-                                outputLIV = csv.writer(DB_LIVROS, delimiter=';')
-                                outputLIV.writerow(livro[n][m] for m in n)
-                            else:  #Escreve o Livro no arquivo.
-                                outputLIV = csv.writer(DB_LIVROS, delimiter=';')
-                                outputLIV.writerow(livro[n][m] for m in n)
                     else:  #Escreve o Cliente no arquivo.
                         outputUSR = csv.writer(DB_CLIENTES, delimiter=';')
-                        outputUSR.writerow(usuario[p][k] for k in p)
+                        outputUSR.writerow(k for k in usuarios)
         else: #Escreve o Emprestimo no arquivo.
             outputEMP = csv.writer(DB_EMPRESTIMOS, delimiter=';')
-            outputEMP.writerow(emprestimo[i][j] for j in i)
-return False
+            outputEMP.writerow(j for j in emprestimo)
+
+        return 1

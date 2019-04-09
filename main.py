@@ -1,4 +1,8 @@
 from views.clienteView import viewCliente
+from views.livroView import viewLivro
+
+
+
 
 while True:
 
@@ -7,10 +11,10 @@ while True:
     opcao = int(input("[1]Livro [2]Cliente [3]Sair\n=>"))
 
     if opcao == 1:
-        print("Livro")
+        viewLivro()
     elif opcao == 2:
         viewCliente()
     elif opcao == 3:
 
-        print("Saido...")
+        print("Saindo...")
         break
