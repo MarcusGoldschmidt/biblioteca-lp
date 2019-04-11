@@ -9,7 +9,6 @@ def viewCliente():
     elif opcao == 2:
         update()
     elif opcao == 3:
-        print("Excluir")
-
+        delete()
     elif opcao == 4:
         exibirclientes()
