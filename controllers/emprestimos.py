@@ -12,8 +12,10 @@ DB_LIVROS = "LivrosCab.csv"
 def index():
     return lerarquivo(DB_EMPRESTIMOS)
 
+
 def indexUsuarios():
     return lerarquivo(DB_CLIENTES)
+
 
 def store():
     emprestimo = []
@@ -209,13 +211,14 @@ def comparardata(datamenor, datamaior):
     else:
         return False
 
+
 def verificaLivro(emprestimo):
     livros = indexLivro()
     flag = 0
     for livro in livros:
         if livro[0] == emprestimo[1]:  # Se os ID's forem Iguais.
             livro[9] = False  # Remove flag de empréstimo.
-            outputLIV = csv.writer(DB_LIVROS, delimiter = ';')
+            outputLIV = csv.writer(DB_LIVROS, delimiter=';')
             outputLIV.writerow(n for n in livro)
 
             flag = 1
@@ -227,24 +230,24 @@ def verificaLivro(emprestimo):
     else:
         return 1
 
-def devolveEmprestimo():
 
+def devolveEmprestimo():
     id = input("ID do Empréstimo: ")
     emprestimos = index()
 
     for emprestimo in emprestimos:
-        if emprestimo[0] == id: #Acha o empréstimo no index.
+        if emprestimo[0] == id:  # Acha o empréstimo no index.
 
             now = datetime.date.today()
             now = now.strftime("%d/%m/%Y")
 
-            emprestimo[5] = now #Atualiza data de devolução.
+            emprestimo[5] = now  # Atualiza data de devolução.
 
-            if emprestimo[4] >= now: #Não aplica punição.
+            if emprestimo[4] >= now:  # Não aplica punição.
                 usuarios = indexUsuarios()
                 for usuario in usuarios:
-                    if usuario[0] == emprestimo[2]: #Se o CPF for igual.
-                        usuario[3] = usuario[3] - 1 #Diminui 1 da Quantidade emprestada.
+                    if usuario[0] == emprestimo[2]:  # Se o CPF for igual.
+                        usuario[3] = usuario[3] - 1  # Diminui 1 da Quantidade emprestada.
                         outputUSR = csv.writer(DB_CLIENTES, delimiter=';')
                         outputUSR.writerow(k for k in usuario)
                         verificaLivro(emprestimo)
@@ -252,30 +255,30 @@ def devolveEmprestimo():
                     else:
                         outputUSR = csv.writer(DB_CLIENTES, delimiter=';')
                         outputUSR.writerow(k for k in usuarios)
-            else: #Aplica punição.
+            else:  # Aplica punição.
                 usuarios = indexUsuarios()
                 for usuario in usuarios:
-                    if usuario[0] == emprestimo[2]: #Se o CPF for igual.
-                        usuario[3] = usuario[3] - 1 #Diminui 1 da Quantidade emprestada.
+                    if usuario[0] == emprestimo[2]:  # Se o CPF for igual.
+                        usuario[3] = usuario[3] - 1  # Diminui 1 da Quantidade emprestada.
 
                         datamax = datetime.datetime.strptime(emprestimo[4], "%d/%m/%Y")
 
-                        now = now.toordinal() #Converte para numero de dias.
-                        pune_dias =  (now - datamax)*2 #Calcula a punição.
+                        now = now.toordinal()  # Converte para numero de dias.
+                        pune_dias = (now - datamax) * 2  # Calcula a punição.
 
-                        usuario[4] = now + pune_dias #Seta a data de prox empréstimo em inteiro
-                        usuario[4] = datetime.date.fromordinal(usuario[4]) #Converte pro formato da data.
-                        usuario[4] = usuario[4].strftime("%d/%m/%Y") #Converte pro formato Brasileiro.
+                        usuario[4] = now + pune_dias  # Seta a data de prox empréstimo em inteiro
+                        usuario[4] = datetime.date.fromordinal(usuario[4])  # Converte pro formato da data.
+                        usuario[4] = usuario[4].strftime("%d/%m/%Y")  # Converte pro formato Brasileiro.
 
                         outputUSR = csv.writer(DB_CLIENTES, delimiter=';')
                         outputUSR.writerow(k for k in usuarios)
 
                         verificaLivro(emprestimo)
 
-                    else:  #Escreve o Cliente no arquivo.
+                    else:  # Escreve o Cliente no arquivo.
                         outputUSR = csv.writer(DB_CLIENTES, delimiter=';')
                         outputUSR.writerow(k for k in usuarios)
-        else: #Escreve o Emprestimo no arquivo.
+        else:  # Escreve o Emprestimo no arquivo.
             outputEMP = csv.writer(DB_EMPRESTIMOS, delimiter=';')
             outputEMP.writerow(j for j in emprestimo)
 
