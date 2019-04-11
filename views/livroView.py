@@ -6,12 +6,12 @@ def viewLivro():
 
     if opcao == 1:
         print("store")
-
+        store()
     elif opcao == 2:
         print("Update")
-
+        update()
     elif opcao == 3:
         print("Excluir")
-
+        deletelivro()
     elif opcao == 4:
         exibirlivros()

@@ -64,6 +64,20 @@ def showLivro(id):
     return 0
 
 
+def deletelivro():
+    data = index()
+    newData = []
+    exibirlivros()
+
+    id = input("excluir por ID: ")
+
+    for livro in data:
+        if livro[0] != id:
+            newData.append(livro)
+
+    escrevefile(newData, DB_LIVRO)
+
+
 def exibirlivros():
     data = index()
 
@@ -80,6 +94,7 @@ def exibirlivro(data):
         print(i + "   |   ", end='')
     print()
 
+
 def buscaKeyword():
     keyword = input("Palavra-chave: ")
     livros = index()
@@ -92,6 +107,7 @@ def buscaKeyword():
     if flag == False:
         print("Palavra chave não encontrada!")
         return False
+
 
 def buscaTitulo():
     title = input("Título do livro: ")
@@ -106,6 +122,7 @@ def buscaTitulo():
         print("Título não encontrado!")
         return False
 
+
 def buscaAutor():
     autor = input("Autor do livro: ")
     livros = index()
@@ -117,7 +134,8 @@ def buscaAutor():
         print("Autor não encontrado!")
         return False
     else:
-        return True #Ficou no final caso haja mais livros do mesmo autor, para a função não retornar logo o valor e parar de procurar
+        return True  # Ficou no final caso haja mais livros do mesmo autor, para a função não retornar logo o valor e parar de procurar
+
 
 def buscaArea():
     area = input("Área do livro: ")
@@ -131,6 +149,7 @@ def buscaArea():
         return False
     else:
         return True
+
 
 def buscaLivro():
     aux = input("Escolha o critério de Busca.\n[1]Keyword\n[2]Título\n[3]autor\n[4]Área\n[5]Sair \n Opção : ")
