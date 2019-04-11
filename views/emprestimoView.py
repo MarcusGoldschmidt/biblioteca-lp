@@ -14,4 +14,4 @@ def viewEmprestimo():
     elif opcao == 4:
         listalivrosemprestadosusuario()
     else:
-        print("Opão inválida")
+        print("Opção inválida")

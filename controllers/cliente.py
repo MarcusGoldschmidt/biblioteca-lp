@@ -28,7 +28,6 @@ def store():
     else:
         print("Erro ao salvar!")
 
-
 def update():
     data = index()
 
