@@ -19,7 +19,6 @@ def store():
             break
         else:
             print("Valor não permitido!")
-        break
     user.append(0)
     user.append("null")
 
@@ -92,6 +91,7 @@ def exibirclientes():
                 break
             print(j + "   |   ", end='')
 
+
 def buscaCliente():
     aux = input("CPF: ")
     cliente = index()
@@ -101,5 +101,3 @@ def buscaCliente():
             return True
 
     return False
-
-
