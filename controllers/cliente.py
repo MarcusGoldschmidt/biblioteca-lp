@@ -13,7 +13,7 @@ def store():
     user.append(input("CPF =>"))
     user.append(input("NOME =>"))
     while True:
-        user.append(input("TIPO =>"))
+        user.append(input("TIPO [0]Prof. [1]Estudante =>"))
         if user[2] in ['0', '1']:
             user[2] = "Professor" if user[2] == 0 else "Estudante"
             break
