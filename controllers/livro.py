@@ -128,8 +128,9 @@ def buscaAutor():
     livros = index()
     flag = False
     for livro in livros:
-        exibirlivro(livro)
-        flag = True
+        if autor == livro[3]:
+            exibirlivro(livro)
+            flag = True
     if flag == False:
         print("Autor não encontrado!")
         return False
@@ -142,8 +143,9 @@ def buscaArea():
     livros = index()
     flag = False
     for livro in livros:
-        exibirlivro(livro)
-        flag = True
+        if area == livro[3]:
+            exibirlivro(livro)
+            flag = True
     if flag == False:
         print("Nenhuma publicação da Área foi encontrada!")
         return False
@@ -152,7 +154,7 @@ def buscaArea():
 
 
 def buscaLivro():
-    aux = input("Escolha o critério de Busca.\n[1]Keyword\n[2]Título\n[3]autor\n[4]Área\n[5]Sair \n Opção : ")
+    aux = int(input("Escolha o critério de Busca.\n[1]Keyword\n[2]Título\n[3]autor\n[4]Área\n[5]Sair \n Opção : "))
     if aux == 1:
         buscaKeyword()
     elif aux == 2:
@@ -163,5 +165,5 @@ def buscaLivro():
         buscaArea()
     elif aux == 5:
         return 0
-    else:
-        return buscaLivro()
+
+

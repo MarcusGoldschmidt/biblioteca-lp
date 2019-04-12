@@ -235,7 +235,7 @@ def verificaLivro(emprestimo):
 
 
 def devolveEmprestimo():
-    id = input("ID do Empréstimo: ")
+    id = int(input("ID do Empréstimo: "))
     emprestimos = index()
 
     for emprestimo in emprestimos:
@@ -244,9 +244,9 @@ def devolveEmprestimo():
             now = datetime.date.today()
             now = now.strftime("%d/%m/%Y")
 
-            emprestimo[5] = now  # Atualiza data de devolução.
+            emprestimo[5] = str(now)  # Atualiza data de devolução.
 
-            if emprestimo[4] >= now:  # Não aplica punição.
+            if emprestimo[4] >= str(now):  # Não aplica punição.
                 usuarios = indexUsuarios()
                 for usuario in usuarios:
                     if usuario[0] == emprestimo[2]:  # Se o CPF for igual.
