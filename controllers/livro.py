@@ -1,6 +1,6 @@
 from controllers.fileMethods import *
 
-DB_LIVRO = "LivrosCab.csv"
+DB_LIVRO = "Livros.csv"
 
 
 def index():

@@ -4,9 +4,9 @@ from controllers.livro import exibirlivros, showLivro, updateonelivro, index as 
 import datetime
 import csv
 
-DB_EMPRESTIMOS = "EmprestimoCab.csv"
-DB_CLIENTES = "UsuariosCab.csv"
-DB_LIVROS = "LivrosCab.csv"
+DB_EMPRESTIMOS = "Emprestimo.csv"
+DB_CLIENTES = "Usuarios.csv"
+DB_LIVROS = "Livros.csv"
 
 
 def index():
@@ -41,7 +41,7 @@ def store():
     data = calculoentrega([int(x) for x in data], cliente[2])
     emprestimo.append(data)
 
-    print("Entraga em " + data)
+    print("Entrega em " + data)
 
     # Data da devolução
     emprestimo.append("NULL")
@@ -61,6 +61,8 @@ def store():
         print("Salvo com sucesso!")
     else:
         print("Erro ao salvar!")
+
+    return 1
 
 
 def calculoentrega(datainicio, tipo):
@@ -95,6 +97,7 @@ def listalivrosemprestadosusuario():
             for livro in livros:
                 if emprestimo[1] == livro[0]:
                     exibirlivro(livro)
+
 
 
 def update():

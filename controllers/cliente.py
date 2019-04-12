@@ -1,6 +1,6 @@
 from controllers.fileMethods import *
 
-DB_CLIENTE = "UsuariosCab.csv"
+DB_CLIENTE = "Usuarios.csv"
 
 
 def index():
@@ -67,7 +67,7 @@ def showCliente(id):
     return 0
 
 
-def delete(id):
+def delete():
     data = index()
     newData = []
 
